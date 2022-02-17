@@ -16,7 +16,7 @@ async function query00(data00){
 	const docRef = query(collection(db, "searching"), where("name", "==", data00));
 	const docSnap = await getDocs(docRef);
 	
-	docSnap.forEach(doc => {
+	return docSnap.forEach(doc => {
 		//console.log(doc.data());
 		return doc.get('name');
 	});
