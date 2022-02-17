@@ -1,4 +1,6 @@
-const { collection, addDoc, getDocs, getDoc, doc } = require('firebase/firestore');
+const { collection, addDoc, getDocs, 
+		getDoc, doc, where, query
+	} = require('firebase/firestore');
 const db = require('../config');
 
 async function queries(){
@@ -12,10 +14,15 @@ async function queries(){
 }
 async function query00(data00){
 	console.log(data00);
-	const docRef = doc(db, "searching", "4on3ZhzxvUJ3zbXjN7LL");
-	const docSnap = await getDoc(docRef);
+	//const docRef = doc(db, "searching", "4on3ZhzxvUJ3zbXjN7LL");
+	const docRef = query(collection(db, "searching"), where("name", "==", data00));
+	const docSnap = await getDocs(docRef);
+	
+	docSnap.forEach(doc => {
+		console.log(doc.data());
+	});
 
-	console.log(`Document data: ${docSnap.get("url")}`);
+	//console.log(`Document data: ${docSnap.get("url")}`);
 
 	/*if(docSnap.exists()){
 		console.log(`Document data: ${docSnap.data()}`);
