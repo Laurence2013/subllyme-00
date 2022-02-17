@@ -13,15 +13,13 @@ async function queries(){
 	return objData;
 }
 async function query00(data00){
-	console.log(data00);
 	const docRef = query(collection(db, "searching"), where("name", "==", data00));
 	const docSnap = await getDocs(docRef);
 	
 	docSnap.forEach(doc => {
 		//console.log(doc.data());
-		console.log(doc.get('name'));
+		return doc.get('name');
 	});
-	return true;
 }
 
 module.exports = { queries, query00 };
