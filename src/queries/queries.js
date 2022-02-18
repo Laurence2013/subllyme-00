@@ -3,27 +3,20 @@ const db = require('../config');
 
 async function queries(){
 	const objData = [];
-	const querySnapshot = await getDocs(collection(db, 'searching'));
+	const querySnapshot = await getDocs(collection(db, 'brief_company_info'));
 
-	querySnapshot.forEach(doc => {
-		objData.push({'id': doc.id, 'data': doc.data()});
-	});
+	querySnapshot.forEach(doc => objData.push({'id': doc.id, 'data': doc.data()}));
 	return objData;
 }
 async function query00(data00){
 	const objData = [];
-	const docRef = query(collection(db, "searching"), where("name", "==", data00));
+	//const docRef = query(collection(db, "brief_company_info"), where("name", "==", data00));
+	//const docRef = query(collection(db, "brief_company_info"), where("name", "<=", data00 + "\uf8ff"));
+	const docRef = query(collection(db, "brief_company_info"), where("name", ">=", data00), where("name", "<=", data00 + "~"));
 	const docSnap = await getDocs(docRef);
 	
-	docSnap.forEach(doc => {
-		objData.push(doc.data());
-	});	
-
-	if(objData.length === 0){
-		return false;
-	}else{
-		return objData;
-	}
+	docSnap.forEach(doc => objData.push(doc.data()));	
+	return objData.length === 0 ? false : objData;
 }
 
 module.exports = { queries, query00 };

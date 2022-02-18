@@ -3,23 +3,14 @@ const express = require('express');
 let router = express.Router();
 
 router.get('/',(req, res, next) => {
-	queries.queries().then(data => {
-		res.json(data);
-	});
+	queries.queries().then(data => res.json(data));
 });
 router.post('/', (req, res, next) => {
-	var data = req.body;
+	let data = req.body;
 
 	if(typeof data.name === 'string'){
-		queries.query00(data.name).then(data => {
-			if(data === false){
-				res.json(data);
-			}else{
-				data.forEach(data00 => {
-					res.json(data00);
-				});
-			}
-		});
+		queries.query00(data.name.toLowerCase())
+			.then(data => data === false ? res.json('Search was not found!') : data.forEach(data00 => res.json(data00)));
 	}
 });
 
