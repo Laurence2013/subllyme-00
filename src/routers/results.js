@@ -12,7 +12,13 @@ router.post('/', (req, res, next) => {
 
 	if(typeof data.name === 'string'){
 		queries.query00(data.name).then(data => {
-			console.log(data);
+			if(data === false){
+				res.json(data);
+			}else{
+				data.forEach(data00 => {
+					res.json(data00);
+				});
+			}
 		});
 	}
 });
