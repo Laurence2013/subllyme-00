@@ -18,6 +18,12 @@ async function query00(data00){
 	});	
 	return objData.length === 0 ? false : objData;
 }
-async function query01(data00){}
+async function query01(id){
+	console.log(id);
+	const objData = [];
+	//const docRef = query(collection(db, "trail_period"));
+
+	return true;
+}
 
 module.exports = { queries, query00 };

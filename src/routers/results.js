@@ -11,12 +11,13 @@ router.post('/', (req, res, next) => {
 
 	if(typeof data.name === 'string'){
 		queries.query00(data.name.toLowerCase())
-			.then(data => { 
-				data.forEach(data00 => id.getId = data00.id);
-				console.log(id.getId);
-
-				data === false ? res.json('Search was not found!') : data.forEach(data00 => res.json(data00.data)) 
-			});
+			.then(data => new Promise((resolve) => { 
+				data === false ? res.json('Search was not found!') : data.forEach(data00 => res.json(data00.data));
+				resolve(data[0].id);
+			}))
+			.then(id => {
+				queries.query01(id).then();
+			})
 	}
 });
 
