@@ -7,10 +7,16 @@ router.get('/',(req, res, next) => {
 });
 router.post('/', (req, res, next) => {
 	let data = req.body;
+	let id = {};
 
 	if(typeof data.name === 'string'){
 		queries.query00(data.name.toLowerCase())
-			.then(data => data === false ? res.json('Search was not found!') : data.forEach(data00 => res.json(data00)));
+			.then(data => { 
+				data.forEach(data00 => id.getId = data00.id);
+				console.log(id.getId);
+
+				data === false ? res.json('Search was not found!') : data.forEach(data00 => res.json(data00.data)) 
+			});
 	}
 });
 
