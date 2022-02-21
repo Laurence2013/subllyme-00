@@ -21,9 +21,12 @@ async function query00(data00){
 async function query01(id){
 	console.log(id);
 	const objData = [];
-	//const docRef = query(collection(db, "trail_period"));
+	const docRef 	= query(collection(db, "trail_period"), where("trail_company", "==", "/brief_company_info/kMlV3o4Rt0OaaRsSEd4a"));
+	const docSnap = await getDocs(docRef);
+
+	docSnap.forEach(doc => console.log(doc));
 
 	return true;
 }
 
-module.exports = { queries, query00 };
+module.exports = { queries, query00, query01 };
