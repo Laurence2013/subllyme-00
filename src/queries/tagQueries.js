@@ -2,31 +2,32 @@ const { collection, addDoc, getDocs, getDoc, doc, where, query, documentId } = r
 const db = require('../config');
 
 async function tagQuery00(tag){
-	const objData = [];
+	const objData = {};
 	const qSnapshot = query(collection(db, "tags"), where("books", "array-contains", tag));	
 	const snapshot = await getDocs(qSnapshot);
 
 	snapshot.forEach(doc => { 
 		if(doc.exists() === true){
-			tagQuery01(doc.data().tags_company.id).then(data => objData.push(data));
+			objData.exists = doc.exists();
+			objData.id = doc.data().tags_company.id;
 		};
 	});
-	if(objData.length != 0){
-		return objData;
-	}else{
-		return false
-	}
+	const data01 = await tagQuery01(objData);
+	data01.forEach(data00 => {
+		objData.data = data00;
+	});
+	return [objData];
 }
-async function tagQuery01(id){
-	const objData = {}
+async function tagQuery01(doc00){
+	const objData = []
 	const qSnapshot = await getDocs(collection(db, "brief_company_info"));	
 
 	qSnapshot.forEach(doc => {
-		if(doc.id === id){
-			objData.data = doc.data();
+		if(doc.id === doc00.id){
+			objData.push(doc.data());
 		}
 	});
-	return objData.data;
+	return objData;
 }
 
 module.exports = { tagQuery00 }
