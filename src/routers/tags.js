@@ -11,7 +11,7 @@ router.post('/', (req, res, next) => {
 
 	if(tag00 === body.tag00.toLowerCase()){
 		queries.tagQuery00(tag00).then(data => {
-			if(data.length === 0){
+			if(data[0].data === false){
 				res.json('No search found!');
 			}else{
 				res.json(data[0].data);
