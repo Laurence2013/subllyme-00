@@ -16,7 +16,11 @@ router.post('/', (req, res, next) => {
 					data01.id 	= data00.id;
 					data01.data = data00.data;
 				})
-				resolve(data[0].id);
+				try{
+					resolve(data[0].id);
+				}catch(e){
+					console.log('Search was not found! This needs to be logged');
+				}
 			}))
 			.then(id => new Promise((resolve) => {
 				queries.query01(id).then(data => {
