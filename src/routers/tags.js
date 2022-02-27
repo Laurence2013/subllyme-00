@@ -11,13 +11,11 @@ router.post('/', (req, res, next) => {
 
 	if(tag00 === body.tag00.toLowerCase()){
 		queries.tagQuery00(tag00).then(data => {
-			data.forEach(data00 => {
-				if(Object.entries(data00).length != 0){
-					res.json(data00)
-				}else{
-					res.json('Search not found!');
-				}
-			});
+			if(data.data.length === 0){
+				res.json('Search not found!');
+			}else{
+				res.json(data.data);
+			}
 		}).catch(e => console.log(e));
 	}
 });
