@@ -14,15 +14,11 @@ async function tagQuery00(tag){
 	await tagQuery01(objIds).then(doc => doc.forEach(doc => objTags00.push({'brief_company_info': doc})));
 	await tagQuery02(objIds).then(doc => doc.forEach(doc => objTags00.push({'trail_period': doc})));
 
-	objTags00.push({'ids': objIds});
+	if(objTags00.length != 0){
+		objTags00.push({'ids': objIds});
+	}
 
-	objTags00.forEach(tags => {
-		if(tags.trail_period){
-			console.log(tags.trail_period.trail_company.id);
-		}
-	})
-
-	return {exist: true};
+	return objTags00;
 }
 async function tagQuery01(doc00){
 	const objData 	= [];
