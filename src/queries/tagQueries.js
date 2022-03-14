@@ -2,21 +2,40 @@ const { collection, addDoc, getDocs, getDoc, doc, where, query, documentId } = r
 const queries 	= require('./queries'); 
 const db 				= require('../config');
 
+async function test(tags){
+	const objIds = []; let objTags00 = [];
+	objIds.push(tags);
+
+	return objIds;
+}
+
 async function tagQuery00(tag){
-	const objIds 									= []; let objTags00 = [];
+	//const objIds 									= []; let objTags00 = [];
+
 	const booksSnapshot00 				= query(collection(db, "tags"), where("books", "array-contains", tag));	
 	const app_downloadSnapshot00	= query(collection(db, "tags"), where("app_download", "array-contains", tag));
+	//const educationSnapshot00 		= query(collection(db, "tags"), where("education", "array-contains", tag));
+	//const individualsSnapshot00 	= query(collection(db, "tags"), where("individuals", "array-contains", tag));
+	//const learning00							= query(collection(db, "tags"), where("learning", "array-contains", tag));
+
 	const booksSnapshot01 				= await getDocs(booksSnapshot00);
 	const app_downloadSnapshot01 	= await getDocs(app_downloadSnapshot00);
+	//const educationSnapshot01 		= await getDocs(educationSnapshot00);
+	//const individualsSnapshot01 	= await getDocs(individualsSnapshot00);
+	//const learning01 							= await getDocs(learning00);
 
-	booksSnapshot01.forEach(doc => {
+	await booksSnapshot01.forEach(doc => {
 		if(doc.exists() === true)
-			console.log('line 14: ' + doc.data().tags_company.id);
+			//objIds.push(doc.data().tags_company.id);
+			test(doc.data().tags_company.id)
 	});
-	app_downloadSnapshot01.forEach(doc => {
+	await app_downloadSnapshot01.forEach(doc => {
 		if(doc.exists() === true)
-			console.log('line 18: ' + doc.data().tags_company.id);
+			//objIds.push(doc.data().tags_company.id);
+			test(doc.data().tags_company.id)
 	});
+
+	//console.log(objIds);
 
 	return {'data': true}
 
